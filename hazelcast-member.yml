@@ -1,0 +1,15 @@
+
+server:
+  port: 9002
+
+security:
+  basic.enabled: false
+
+app:
+  hazelcast:
+    port: 5701
+
+eureka:
+  instance:
+    metadataMap:
+      hazelcast-port: ${app.hazelcast.port:5701}

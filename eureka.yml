@@ -1,0 +1,13 @@
+
+server:
+  port: 9001
+
+security:
+  user:
+    name:     ${eureka.name}
+    password: ${eureka.password}
+
+eureka:
+  client:
+    fetchRegistry:      false
+    registerWithEureka: true

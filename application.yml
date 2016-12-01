@@ -1,0 +1,44 @@
+
+management:
+  context-path: '/admin'
+  security:
+    enabled: false
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    rabbit.enabled: true
+    sensitive: false # to see the health details
+
+eureka:
+  name:     eurekaserver
+  #   The password is encrypted by this:
+  #   http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html#_encryption_and_decryption
+  #   the password is '81G9kf7zYTJrxRqLBnfsk1ItuGHmPiw'
+  password: '{cipher}AQBq0DvbdCNDJ2jXBSBbIVG6fQJwwD0KldhnY0eL1U7OfSPMhvy+Gd9hbTX09Go95j99WwzO8NH8OLcN40jhrhJdnp+J3pU1EYP1KjMkDKerD28e/lJTG4QV5Y8gojE22H6Z57lRPbGdFMPimMjZV+qYOtTKff8cUHLJDO2W3mVlrB2WGPUTLTgw78Rt7zwZ3Y41m/SAbDkiHDaVl7O0XKe+HjmMxwqtL00vNMTg4DifnEVzs1koeZaWHJb5sZXpcyIC5ZVbGvm33eFxL4ZAyNWIUDh7sPJEl4gVUsr1QebExCjKq8Tsi65UOHAHVq2kuR6nOS6gbH2SUeWBgJYeh4O4fXLIPRFaju9NekOiY1jaeY1FYmDrGCouV1hlULNrNmTwFcy9jgyE+LuZ52lpVd2l'
+  instance:
+    hostname: ${HOSTNAME:localhost} # try to get OS ENVIRONMENT variable
+    statusPageUrlPath:  ${management.context-path}/info
+    healthCheckUrlPath: ${management.context-path}/health
+  client:
+    serviceUrl:
+      defaultZone:  http://${eureka.name}:${eureka.password}@localhost:9001/eureka/
+
+
+---
+spring:
+  profiles: docker
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://${eureka.name}:${eureka.password}@eureka:8080/eureka/
+
+logging:
+  file: service.log

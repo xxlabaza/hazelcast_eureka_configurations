@@ -1,0 +1,15 @@
+
+server:
+  port: 9003
+
+security:
+  basic.enabled: false
+
+# For more details see:
+# http://codecentric.github.io/spring-boot-admin/1.4.3/#_securing_spring_boot_admin_server
+spring:
+  boot:
+    admin:
+      discovery.converter.management-context-path: /admin
+      routes:
+        endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,hystrix.stream,turbine.stream
